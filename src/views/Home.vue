@@ -5,7 +5,7 @@
       <instagram-card />
       <instagram-card />
     </div>
-    <div class="col-3">Sidebar</div>
+    <div class="col-3">Sidebar sadasda</div>
   </div>
 </template>
 <script>
