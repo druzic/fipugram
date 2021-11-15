@@ -14,14 +14,14 @@
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
-        data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarToggler">
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item active">
             <router-link to="/" class="nav-link">Home</router-link>
@@ -37,6 +37,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input
+            v-model="store.searchTerm"
             class="form-control mr-sm-2"
             type="search"
             placeholder="Pretraga"
@@ -48,6 +49,19 @@
     <router-view />
   </div>
 </template>
+
+<script>
+import store from "@/store";
+
+export default {
+  name: "app",
+  data() {
+    return {
+      store,
+    };
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
