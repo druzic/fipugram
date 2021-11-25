@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav id="nav" class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
         <img
           src="@/assets/fipu_logo.png"
           height="40"
@@ -22,16 +22,21 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <router-link to="/" class="nav-link">Home</router-link>
+        <ul class="navbar-nav ml-auto">
+          <li v-if="!store.currentUser" class="nav-item">
+            <router-link to="/login" class="nav-link">Login</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/login" class="nav-link">Prijava</router-link>
+          <li v-if="!store.currentUser" class="nav-item">
+            <router-link to="/signup" class="nav-link">Sign up</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/signup" class="nav-link"
-              >Registracija</router-link
+          <li v-if="store.currentUser" class="nav-item">
+            <router-link to="/dashboard" class="nav-link"
+              >Dashboard</router-link
+            >
+          </li>
+          <li v-if="store.currentUser" class="nav-item">
+            <a href="#" @click.prevent="odjavi_korisnika()" class="nav-link"
+              >Logout</a
             >
           </li>
         </ul>
@@ -51,7 +56,26 @@
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged, signOut } from "@/firebase";
 import store from "@/store";
+import router from "@/router";
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  const currentRoute = router.currentRoute;
+
+  if (user) {
+    // User is signed in.
+    console.log("*** User", user);
+    store.currentUser = user;
+  } else {
+    // User is not signed in.
+    console.log("*** No user");
+    store.currentUser = null;
+    if (currentRoute !== "Login") {
+      router.push({ name: "Login" });
+    }
+  }
+});
 
 export default {
   name: "app",
@@ -59,6 +83,18 @@ export default {
     return {
       store,
     };
+  },
+  methods: {
+    odjavi_korisnika() {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+    },
   },
 };
 </script>

@@ -8,7 +8,7 @@
         :info="card"
       />
     </div>
-    <div class="col-4">Sidebar</div>
+    <div class="col-4" v-if="store.currentUser">Bok {{ username }}</div>
   </div>
 </template>
 <script>
@@ -28,13 +28,13 @@ cards = [
     author: "krešo",
     title: "dva",
     time: "2 days ago",
-    url: "https://picsum.photos/id/2/400/400",
+    url: "https://picsum.photos/id/7/400/400",
   },
   {
     author: "goran",
     title: "tri",
     time: "4 days ago",
-    url: "https://picsum.photos/id/3/400/400",
+    url: "https://picsum.photos/id/15/400/400",
   },
 ];
 
@@ -44,6 +44,7 @@ export default {
     return {
       cards,
       store,
+      username: store.currentUser.displayName,
     };
   },
   computed: {

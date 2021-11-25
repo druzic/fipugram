@@ -1,5 +1,5 @@
 <template>
-  <div class="card text-center">
+  <div class="card text-center w-50 mx-auto">
     <div class="card-header">{{ info.title }}</div>
     <div class="card-body p-0">
       <img class="card-img-top" :src="info.url" />
